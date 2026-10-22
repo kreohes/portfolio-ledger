@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-ledger",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A personal ledger for crypto and stock holdings: transactions in, positions and profit out.",
+  "scripts": {
+    "start": "node src/index.ts",
+    "lint": "npm run lint-typecheck && npm run lint-prettier && npm run lint-eslint",
+    "lint-typecheck": "tsc",
+    "lint-prettier": "prettier --check .",
+    "lint-eslint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1"
+  }
+}
