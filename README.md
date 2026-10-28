@@ -38,6 +38,16 @@ npm start
 npm run lint
 ```
 
+## Files
+
+- `src/holding.ts` - the Holding interface, my main piece of data
+- `src/transactions.ts` - five kinds of transactions in one union and `describe`
+- `src/portfolio.ts` - the Portfolio class, keeps the amounts of every asset private
+- `src/guard.ts` - `isTransaction` and `loadTransactions`, checks JSON text before using it
+
+Every file can be run alone with `node src/<file>.ts`, `npm start` just prints this list.
+
 ## Status
 
-Only the setup for now (TypeScript, ESLint, Prettier). No logic yet.
+Module 1 done: data shape, kinds, class, guard. The real ledger file and the report
+come next.

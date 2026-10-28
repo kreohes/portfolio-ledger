@@ -4,6 +4,7 @@ interface BaseTransaction {
   date: string
   asset: string
   amount: number
+  note?: string
 }
 
 export interface Buy extends BaseTransaction {

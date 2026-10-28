@@ -1,3 +1,7 @@
-const name = "Portfolio Ledger"
-
-console.log(name + ": nothing to track yet, see README.md")
+console.log("Portfolio Ledger")
+console.log("")
+console.log("Module 1 scripts, run them one by one:")
+console.log("  node src/holding.ts       - the data shape")
+console.log("  node src/transactions.ts  - kinds of transactions")
+console.log("  node src/portfolio.ts     - the class that keeps the amounts")
+console.log("  node src/guard.ts         - checking transactions from text")
