@@ -1,6 +1,6 @@
 // Cycle 3: a class that keeps the amounts privately
 
-import { sample, type Transaction } from "./transactions.ts"
+import { type Transaction } from "./transactions.ts"
 
 type Asset = "BTC" | "ETH" | "SOL" | "USDT"
 
@@ -42,13 +42,3 @@ function toAsset(name: string): Asset {
   }
   throw new Error("Unknown asset " + name)
 }
-
-const portfolio = new Portfolio()
-
-for (let i = 0; i < sample.length; i++) {
-  portfolio.apply(sample[i])
-}
-
-console.log(portfolio.report())
-
-// portfolio.amounts.BTC = 100  -> error, amounts is private

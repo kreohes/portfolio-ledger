@@ -33,21 +33,33 @@ Later: a small server and a page in the browser with the same report.
 ## How to run
 
 ```
-npm install
-npm start
-npm run lint
+pnpm install
+pnpm start
+pnpm lint
 ```
+
+It is a pnpm workspace now, with three packages:
+
+- `features/ledger` - the library: types, `describe`, `Portfolio`, `loadTransactions`
+- `apps/cli` - the program that uses the library and prints things (`pnpm start`)
+- `internal/tooling` - shared settings for TypeScript, ESLint and Prettier
+
+`pnpm lint` runs lint in every package with Nx, tooling first because the others depend
+on it. The workflow in `.github` runs the same lint on push.
 
 ## Files
 
-- `src/holding.ts` - the Holding interface, my main piece of data
-- `src/transactions.ts` - five kinds of transactions in one union and `describe`
-- `src/portfolio.ts` - the Portfolio class, keeps the amounts of every asset private
-- `src/guard.ts` - `isTransaction` and `loadTransactions`, checks JSON text before using it
+In `features/ledger/src`:
 
-Every file can be run alone with `node src/<file>.ts`, `npm start` just prints this list.
+- `holding.ts` - the Holding interface, my main piece of data
+- `transactions.ts` - five kinds of transactions in one union and `describe`
+- `portfolio.ts` - the Portfolio class, keeps the amounts of every asset private
+- `guard.ts` - `isTransaction` and `loadTransactions`, checks JSON text before using it
+- `index.ts` - what the package exports
+
+The demo from module 1 is in `apps/cli/src/index.ts`.
 
 ## Status
 
-Module 1 done: data shape, kinds, class, guard. The real ledger file and the report
-come next.
+Module 1 done: data shape, kinds, class, guard. Module 2: workspace with a library and
+a cli. The real ledger file and the report come next.

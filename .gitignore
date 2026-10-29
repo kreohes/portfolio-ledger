@@ -1,4 +1,5 @@
 node_modules
+.nx
 .DS_Store
 Thumbs.db
 tsconfig.tsbuildinfo

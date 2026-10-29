@@ -3,13 +3,11 @@
     "target": "ESNext",
     "module": "NodeNext",
     "lib": ["ESNext"],
-    "types": ["node"],
 
     "strict": true,
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "noEmit": true,
     "verbatimModuleSyntax": true
-  },
-  "include": ["src"]
+  }
 }

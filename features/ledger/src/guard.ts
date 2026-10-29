@@ -1,6 +1,6 @@
 // Cycle 4: transactions from a file are unknown until we check them
 
-import { type Transaction, describe } from "./transactions.ts"
+import { type Transaction } from "./transactions.ts"
 
 export function loadTransactions(text: string): Transaction[] {
   let value: unknown
@@ -85,32 +85,4 @@ export function isTransaction(value: unknown): value is Transaction {
   }
 
   return false
-}
-
-const good = `[
-  { "kind": "deposit", "date": "2026-10-01", "asset": "USDT", "amount": 500, "account": "binance" },
-  { "kind": "buy", "date": "2026-10-02", "asset": "BTC", "amount": 0.004, "price": 95000, "fee": 0.4, "account": "binance", "note": "first one" }
-]`
-
-const broken = [
-  `[{ "kind": "buy", "date": "2026-10-02", "asset": "BTC", "amount": "0.004" }]`,
-  `[{ "kind": "gift", "date": "2026-10-02", "asset": "BTC", "amount": 1 }]`,
-  `[{ "kind": "deposit", "date": "2026-10-01", "asset": "USDT", "amount": 5, "account": "binance", "note": 7 }]`,
-  `{ "kind": "deposit" }`,
-  `[{ "kind": "deposit",`,
-]
-
-const loaded = loadTransactions(good)
-for (let i = 0; i < loaded.length; i++) {
-  console.log(describe(loaded[i]))
-}
-
-for (let i = 0; i < broken.length; i++) {
-  try {
-    loadTransactions(broken[i])
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log("broken " + (i + 1) + ": " + error.message)
-    }
-  }
 }

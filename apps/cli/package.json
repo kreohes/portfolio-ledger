@@ -1,0 +1,24 @@
+{
+  "name": "ledger-cli",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "pnpm run \"/^lint-.*/\"",
+    "lint-typecheck": "tsc",
+    "lint-prettier": "prettier --check .",
+    "lint-eslint": "eslint .",
+    "start": "node ."
+  },
+  "dependencies": {
+    "ledger": "workspace:*"
+  },
+  "devDependencies": {
+    "@ledger/tooling": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  }
+}

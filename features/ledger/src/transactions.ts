@@ -162,7 +162,3 @@ export const sample: Transaction[] = [
     fee: 1,
   },
 ]
-
-for (let i = 0; i < sample.length; i++) {
-  console.log(describe(sample[i]))
-}
