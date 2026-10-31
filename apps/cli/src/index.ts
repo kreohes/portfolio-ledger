@@ -1,7 +1,7 @@
 import {
   type Holding,
   Portfolio,
-  describe,
+  describe as describeTransaction,
   loadTransactions,
   sample,
 } from "ledger"
@@ -19,7 +19,7 @@ console.log(btc.asset + ": " + btc.amount + " in " + btc.account)
 console.log("")
 
 for (let i = 0; i < sample.length; i++) {
-  console.log(describe(sample[i]))
+  console.log(describeTransaction(sample[i]))
 }
 console.log("")
 

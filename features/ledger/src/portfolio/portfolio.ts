@@ -1,10 +1,8 @@
-// Cycle 3: a class that keeps the amounts privately
+import { type Transaction } from "../transactions/index.ts"
 
-import { type Transaction } from "./transactions.ts"
+import { type Asset, ASSETS, toAsset } from "./assets.ts"
 
-type Asset = "BTC" | "ETH" | "SOL" | "USDT"
-
-export class Portfolio {
+export default class Portfolio {
   private amounts: Record<Asset, number> = { BTC: 0, ETH: 0, SOL: 0, USDT: 0 }
   private applied = 0
 
@@ -27,18 +25,10 @@ export class Portfolio {
   }
 
   public report(): string {
-    let result = "After " + this.applied + " transactions:\n"
-    result = result + "  BTC " + this.amounts.BTC + "\n"
-    result = result + "  ETH " + this.amounts.ETH + "\n"
-    result = result + "  SOL " + this.amounts.SOL + "\n"
-    result = result + "  USDT " + this.amounts.USDT
+    let result = "After " + this.applied + " transactions:"
+    for (let i = 0; i < ASSETS.length; i++) {
+      result = result + "\n  " + ASSETS[i] + " " + this.amounts[ASSETS[i]]
+    }
     return result
   }
-}
-
-function toAsset(name: string): Asset {
-  if (name === "BTC" || name === "ETH" || name === "SOL" || name === "USDT") {
-    return name
-  }
-  throw new Error("Unknown asset " + name)
 }

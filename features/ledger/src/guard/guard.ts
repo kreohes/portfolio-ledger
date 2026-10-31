@@ -1,6 +1,4 @@
-// Cycle 4: transactions from a file are unknown until we check them
-
-import { type Transaction } from "./transactions.ts"
+import { type Transaction } from "../transactions/index.ts"
 
 export function loadTransactions(text: string): Transaction[] {
   let value: unknown

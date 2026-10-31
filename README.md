@@ -49,13 +49,13 @@ on it. The workflow in `.github` runs the same lint on push.
 
 ## Files
 
-In `features/ledger/src`:
+In `features/ledger/src`, every folder is a modlet with its own `index.ts`:
 
 - `holding.ts` - the Holding interface, my main piece of data
-- `transactions.ts` - five kinds of transactions in one union and `describe`
-- `portfolio.ts` - the Portfolio class, keeps the amounts of every asset private
-- `guard.ts` - `isTransaction` and `loadTransactions`, checks JSON text before using it
-- `index.ts` - what the package exports
+- `transactions/` - five kinds of transactions in one union (types.ts) and `describe` (describe.ts)
+- `portfolio/` - the Portfolio class (portfolio.ts) and the list of assets (assets.ts)
+- `guard/` - `isTransaction` and `loadTransactions`, checks JSON text before using it
+- `index.ts` - what the package exports, only through the indexes of the folders
 
 The demo from module 1 is in `apps/cli/src/index.ts`.
 
