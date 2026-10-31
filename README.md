@@ -55,11 +55,13 @@ In `features/ledger/src`, every folder is a modlet with its own `index.ts`:
 - `transactions/` - five kinds of transactions in one union (types.ts) and `describe` (describe.ts)
 - `portfolio/` - the Portfolio class (portfolio.ts) and the list of assets (assets.ts)
 - `guard/` - `isTransaction` and `loadTransactions`, checks JSON text before using it
+- `ledger/` - `loadLedger(file)`, reads a JSON file with await and checks it with the guard
 - `index.ts` - what the package exports, only through the indexes of the folders
 
-The demo from module 1 is in `apps/cli/src/index.ts`.
+The cli reads `apps/cli/data/ledger.json`, the path is built from the folder of the script.
+A missing file, broken JSON and a wrong shape give three different messages and exit code 1.
 
 ## Status
 
-Module 1 done: data shape, kinds, class, guard. Module 2: workspace with a library and
-a cli. The real ledger file and the report come next.
+Module 1: data shape, kinds, class, guard. Module 2: workspace with a library and a cli.
+Module 3: modlets, the ledger comes from a JSON file. Commands for the terminal come next.

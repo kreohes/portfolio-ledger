@@ -11,3 +11,4 @@ export {
 } from "./transactions/index.ts"
 export { default as Portfolio, type Asset, ASSETS } from "./portfolio/index.ts"
 export { isTransaction, loadTransactions } from "./guard/index.ts"
+export { loadLedger } from "./ledger/index.ts"

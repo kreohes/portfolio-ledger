@@ -1,56 +1,28 @@
-import {
-  type Holding,
-  Portfolio,
-  describe as describeTransaction,
-  loadTransactions,
-  sample,
-} from "ledger"
+import path from "node:path"
 
-// the demo of module 1, now it uses the ledger package
+import { Portfolio, type Transaction, describe, loadLedger } from "ledger"
 
-const btc: Holding = {
-  asset: "BTC",
-  amount: 0.042,
-  account: "ledger-wallet",
-  tags: ["long term", "cold"],
-  staked: false,
+const file = path.join(import.meta.dirname, "..", "data", "ledger.json")
+
+let transactions: Transaction[]
+
+try {
+  transactions = await loadLedger(file)
+} catch (error) {
+  console.error(error instanceof Error ? error.message : error)
+  process.exit(1)
 }
-console.log(btc.asset + ": " + btc.amount + " in " + btc.account)
+
+console.log("Ledger: " + file)
 console.log("")
 
-for (let i = 0; i < sample.length; i++) {
-  console.log(describeTransaction(sample[i]))
+for (let i = 0; i < transactions.length; i++) {
+  console.log(describe(transactions[i]))
 }
 console.log("")
 
 const portfolio = new Portfolio()
-for (let i = 0; i < sample.length; i++) {
-  portfolio.apply(sample[i])
+for (let i = 0; i < transactions.length; i++) {
+  portfolio.apply(transactions[i])
 }
 console.log(portfolio.report())
-console.log("")
-
-const good = `[
-  { "kind": "deposit", "date": "2026-10-01", "asset": "USDT", "amount": 500, "account": "binance" },
-  { "kind": "buy", "date": "2026-10-02", "asset": "BTC", "amount": 0.004, "price": 95000, "fee": 0.4, "account": "binance", "note": "first one" }
-]`
-
-const broken = [
-  `[{ "kind": "buy", "date": "2026-10-02", "asset": "BTC", "amount": "0.004" }]`,
-  `[{ "kind": "gift", "date": "2026-10-02", "asset": "BTC", "amount": 1 }]`,
-  `{ "kind": "deposit" }`,
-  `[{ "kind": "deposit",`,
-]
-
-const loaded = loadTransactions(good)
-console.log("loaded " + loaded.length + " transactions from text")
-
-for (let i = 0; i < broken.length; i++) {
-  try {
-    loadTransactions(broken[i])
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log("broken " + (i + 1) + ": " + error.message)
-    }
-  }
-}

@@ -1,0 +1,54 @@
+[
+  {
+    "kind": "deposit",
+    "date": "2026-10-01",
+    "asset": "USDT",
+    "amount": 500,
+    "account": "binance"
+  },
+  {
+    "kind": "buy",
+    "date": "2026-10-02",
+    "asset": "BTC",
+    "amount": 0.004,
+    "price": 95000,
+    "fee": 0.4,
+    "account": "binance",
+    "note": "first one"
+  },
+  {
+    "kind": "buy",
+    "date": "2026-10-05",
+    "asset": "ETH",
+    "amount": 0.05,
+    "price": 3200,
+    "fee": 0.2,
+    "account": "binance"
+  },
+  {
+    "kind": "transfer",
+    "date": "2026-10-10",
+    "asset": "BTC",
+    "amount": 0.004,
+    "from": "binance",
+    "to": "ledger-wallet",
+    "fee": 0.00002
+  },
+  {
+    "kind": "sell",
+    "date": "2026-10-20",
+    "asset": "ETH",
+    "amount": 0.02,
+    "price": 3400,
+    "fee": 0.1,
+    "account": "binance"
+  },
+  {
+    "kind": "withdraw",
+    "date": "2026-10-25",
+    "asset": "USDT",
+    "amount": 50,
+    "account": "binance",
+    "fee": 1
+  }
+]
