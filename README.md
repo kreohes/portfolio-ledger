@@ -34,14 +34,19 @@ Later: a small server and a page in the browser with the same report.
 
 ```
 pnpm install
-pnpm start
 pnpm lint
+cd apps/cli
+node . --help
+node . report                       # asks for the file
+node . report data/ledger.json
+node . show BTC
+node . show ETH --file data/ledger.json
 ```
 
 It is a pnpm workspace now, with three packages:
 
 - `features/ledger` - the library: types, `describe`, `Portfolio`, `loadTransactions`
-- `apps/cli` - the program that uses the library and prints things (`pnpm start`)
+- `apps/cli` - the command line tool: `report` and `show` commands (commander + inquirer)
 - `internal/tooling` - shared settings for TypeScript, ESLint and Prettier
 
 `pnpm lint` runs lint in every package with Nx, tooling first because the others depend
@@ -58,10 +63,12 @@ In `features/ledger/src`, every folder is a modlet with its own `index.ts`:
 - `ledger/` - `loadLedger(file)`, reads a JSON file with await and checks it with the guard
 - `index.ts` - what the package exports, only through the indexes of the folders
 
-The cli reads `apps/cli/data/ledger.json`, the path is built from the folder of the script.
+The cli reads `apps/cli/data/ledger.json` by default, the path is built from the folder of the
+script. `report` without a file asks for it, `show` needs the asset and takes `--file`.
 A missing file, broken JSON and a wrong shape give three different messages and exit code 1.
 
 ## Status
 
 Module 1: data shape, kinds, class, guard. Module 2: workspace with a library and a cli.
-Module 3: modlets, the ledger comes from a JSON file. Commands for the terminal come next.
+Module 3: modlets, the ledger comes from a JSON file, two commands for the terminal.
+Next: prices and the profit.

@@ -1,28 +1,31 @@
-import path from "node:path"
+import { program } from "commander"
 
-import { Portfolio, type Transaction, describe, loadLedger } from "ledger"
+import report from "./commands/report/index.ts"
+import show from "./commands/show/index.ts"
 
-const file = path.join(import.meta.dirname, "..", "data", "ledger.json")
+program.name("ledger").description("Look at my portfolio from the terminal")
 
-let transactions: Transaction[]
+program
+  .command("report")
+  .description("Count how much of every asset I have")
+  .argument("[file]", "the ledger file, asked if missing")
+  .action(report)
+
+program
+  .command("show")
+  .description("List the transactions of one asset")
+  .argument("<asset>", "the asset, for example BTC")
+  .option("-f, --file <file>", "the ledger file")
+  .action(show)
 
 try {
-  transactions = await loadLedger(file)
+  await program.parseAsync()
 } catch (error) {
-  console.error(error instanceof Error ? error.message : error)
-  process.exit(1)
+  if (error instanceof Error && error.name === "ExitPromptError") {
+    // Ctrl+C in a prompt, nothing to print
+    process.exitCode = 130
+  } else {
+    console.error(error instanceof Error ? error.message : error)
+    process.exitCode = 1
+  }
 }
-
-console.log("Ledger: " + file)
-console.log("")
-
-for (let i = 0; i < transactions.length; i++) {
-  console.log(describe(transactions[i]))
-}
-console.log("")
-
-const portfolio = new Portfolio()
-for (let i = 0; i < transactions.length; i++) {
-  portfolio.apply(transactions[i])
-}
-console.log(portfolio.report())

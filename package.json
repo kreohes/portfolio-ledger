@@ -14,7 +14,7 @@
     "lint-typecheck": "nx run-many -t lint-typecheck",
     "lint-eslint": "nx run-many -t lint-eslint",
     "lint-prettier": "nx run-many -t lint-prettier",
-    "start": "nx run ledger-cli:start"
+    "start": "nx run ledger-cli:start -- report"
   },
   "devDependencies": {
     "nx": "^24.0.1"
