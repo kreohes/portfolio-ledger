@@ -8,14 +8,16 @@ program.name("ledger").description("Look at my portfolio from the terminal")
 program
   .command("report")
   .description("Count how much of every asset I have")
-  .argument("[file]", "the ledger file, asked if missing")
+  .argument("[file]", "optional local JSON file to send to the API")
+  .option("-l, --ledger <id>", "ledger on the API", "demo")
   .action(report)
 
 program
   .command("show")
   .description("List the transactions of one asset")
   .argument("<asset>", "the asset, for example BTC")
-  .option("-f, --file <file>", "the ledger file")
+  .option("-f, --file <file>", "local JSON file to send to the API")
+  .option("-l, --ledger <id>", "ledger on the API", "demo")
   .action(show)
 
 try {

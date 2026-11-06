@@ -1,0 +1,25 @@
+{
+  "name": "@ledger/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "pnpm run \"/^lint-.*/\"",
+    "lint-typecheck": "tsc",
+    "lint-prettier": "prettier --check .",
+    "lint-eslint": "eslint .",
+    "start": "vite src --config src/vite.config.ts",
+    "build": "vite build src --config src/vite.config.ts --outDir ../dist --emptyOutDir"
+  },
+  "dependencies": {
+    "ledger": "workspace:*"
+  },
+  "devDependencies": {
+    "@ledger/tooling": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "vite": "8.3.7"
+  }
+}

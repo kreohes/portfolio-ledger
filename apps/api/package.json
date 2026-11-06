@@ -1,0 +1,29 @@
+{
+  "name": "@ledger/api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "pnpm run \"/^lint-.*/\"",
+    "lint-typecheck": "tsc",
+    "lint-prettier": "prettier --check .",
+    "lint-eslint": "eslint .",
+    "start": "node src/index.ts",
+    "test": "node --test src/app/*.test.ts",
+    "dev": "nodemon src/index.ts"
+  },
+  "dependencies": {
+    "ledger": "workspace:*",
+    "fastify": "5.12.8",
+    "@fastify/cors": "^11.0.0"
+  },
+  "devDependencies": {
+    "@ledger/tooling": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "nodemon": "^3.1.10"
+  },
+  "main": "src/index.ts"
+}

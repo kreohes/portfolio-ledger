@@ -1,0 +1,7 @@
+{
+  "extends": "@ledger/tooling/typescript",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["src"]
+}

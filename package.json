@@ -14,9 +14,17 @@
     "lint-typecheck": "nx run-many -t lint-typecheck",
     "lint-eslint": "nx run-many -t lint-eslint",
     "lint-prettier": "nx run-many -t lint-prettier",
-    "start": "nx run ledger-cli:start -- report"
+    "start": "nx run ledger-cli:start -- report",
+    "api": "pnpm --filter @ledger/api start",
+    "web": "pnpm --filter @ledger/web start",
+    "build": "pnpm --filter @ledger/web build",
+    "test": "pnpm --filter @ledger/api test"
   },
   "devDependencies": {
     "nx": "^24.0.1"
-  }
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "packageManager": "pnpm@12.16.1"
 }

@@ -1,36 +1,17 @@
-import { ASSETS, describe as describeTransaction, loadLedger } from "ledger"
-
-import { locateLedger } from "../../lib/files.ts"
-
+import { describe, loadLedger } from "ledger"
+import { createLedger, getTransactions } from "ledger/services"
 interface Options {
   file?: string
+  ledger?: string
 }
-
 export default async function show(
   asset: string,
   options: Options,
 ): Promise<void> {
-  let known = false
-  for (let i = 0; i < ASSETS.length; i++) {
-    if (ASSETS[i] === asset) {
-      known = true
-    }
-  }
-  if (!known) {
-    throw new Error("Unknown asset " + asset + ", I know " + ASSETS.join(", "))
-  }
-
-  const transactions = await loadLedger(options.file ?? locateLedger())
-
-  let found = 0
-  for (let i = 0; i < transactions.length; i++) {
-    if (transactions[i].asset === asset) {
-      console.log(describeTransaction(transactions[i]))
-      found = found + 1
-    }
-  }
-
-  if (found === 0) {
+  let id = options.ledger ?? "demo"
+  if (options.file) id = (await createLedger(await loadLedger(options.file))).id
+  const result = await getTransactions(id, asset)
+  if (result.transactions.length === 0)
     console.log("No transactions with " + asset)
-  }
+  for (const tx of result.transactions) console.log(describe(tx))
 }
