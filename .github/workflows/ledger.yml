@@ -1,18 +1,13 @@
-name: ledger
-
+name: Checks
 on:
   push:
-    paths:
-      - "features/ledger/**"
-      - "apps/cli/**"
-      - "internal/tooling/**"
-      - ".github/workflows/ledger.yml"
-      - ".github/actions/**"
-
+  pull_request:
 jobs:
-  lint:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm build

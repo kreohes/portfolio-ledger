@@ -1,74 +1,67 @@
 # Portfolio Ledger
 
-My personal project for FE403 (Advanced JavaScript and TypeScript, Harbour.Space).
+My personal project for FE403. It reads transactions and counts how much of each
+asset I have. The file has sample data, not real accounts. It knows BTC, ETH, SOL and USDT.
 
-## Idea
+## Run
 
-A small program to keep track of my crypto and stocks. I have coins on a few exchanges
-and wallets and I never know how much I actually have and if I am in plus or minus. The
-idea is to write all transactions in a file and the program counts everything.
+Node 24 or newer and pnpm 12.16.1 are needed.
 
-## Data
-
-A list of transactions. Every transaction has a date, an asset (BTC, ETH, AAPL...) and an
-amount. Depending on the kind it has more fields:
-
-- buy / sell - price, fee, account
-- deposit / withdraw - account, fee
-- transfer - from account, to account, fee
-
-The transactions will be in a JSON file, later maybe CSV export from the exchange. The
-program must check the data before using it, because a typo in the file should not give
-NaN in the report.
-
-## What it will do
-
-- check every transaction
-- count how much of every asset I have and the average price
-- count the profit (realized and not realized)
-- print a report in the terminal
-
-Later: a small server and a page in the browser with the same report.
-
-## How to run
-
+```sh
+pnpm install --frozen-lockfile
+pnpm api
 ```
-pnpm install
+
+Keep the server running. In another terminal:
+
+```sh
+pnpm web
+```
+
+Open http://127.0.0.1:5174. The API is http://127.0.0.1:3001.
+Click a transaction for its details. Create demo copy makes a new ledger on the API.
+
+The terminal also uses the API:
+
+```sh
+pnpm --filter ledger-cli exec node . report
+pnpm --filter ledger-cli exec node . show BTC --ledger demo
+pnpm --filter ledger-cli exec node . report ../api/src/data/ledger.json
+```
+
+The last command sends a local JSON file to the server. This path is relative to
+`apps/cli`. `show` also has `--file`, and `report` has `--ledger`.
+Use `pnpm --filter @ledger/api dev` for automatic restart.
+
+## Check
+
+```sh
 pnpm lint
-cd apps/cli
-node . --help
-node . report                       # asks for the file
-node . report data/ledger.json
-node . show BTC
-node . show ETH --file data/ledger.json
+pnpm test
+pnpm build
 ```
 
-It is a pnpm workspace now, with three packages:
+The workflow runs these on GitHub.
 
-- `features/ledger` - the library: types, `describe`, `Portfolio`, `loadTransactions`
-- `apps/cli` - the command line tool: `report` and `show` commands (commander + inquirer)
-- `internal/tooling` - shared settings for TypeScript, ESLint and Prettier
+## Folders
 
-`pnpm lint` runs lint in every package with Nx, tooling first because the others depend
-on it. The workflow in `.github` runs the same lint on push.
+- `features/ledger`: transaction kinds, Portfolio class, guards, loading and services
+- `apps/api`: ledger routes and the sample data
+- `apps/cli`: report and show commands
+- `apps/web`: balances, transaction list and click listener
+- `internal/tooling`: shared lint and TypeScript settings
 
-## Files
+The folders are modlets with `index.ts`. Services use a generic request function.
+Position uses Pick from Holding. The page uses createElement and textContent, with
+one listener for the transaction list. The old listener is removed when the list changes.
 
-In `features/ledger/src`, every folder is a modlet with its own `index.ts`:
+## API and status
 
-- `holding.ts` - the Holding interface, my main piece of data
-- `transactions/` - five kinds of transactions in one union (types.ts) and `describe` (describe.ts)
-- `portfolio/` - the Portfolio class (portfolio.ts) and the list of assets (assets.ts)
-- `guard/` - `isTransaction` and `loadTransactions`, checks JSON text before using it
-- `ledger/` - `loadLedger(file)`, reads a JSON file with await and checks it with the guard
-- `index.ts` - what the package exports, only through the indexes of the folders
+GET `/ledgers/:id` reads a ledger. POST `/ledgers` creates one from `{ transactions: [...] }`.
+GET `/portfolio` and `/transactions/:asset` need the `x-ledger-id` header, for example `demo`.
+Wrong data gives 400, a missing header gives 401, and an unknown item gives 404.
 
-The cli reads `apps/cli/data/ledger.json` by default, the path is built from the folder of the
-script. `report` without a file asks for it, `show` needs the asset and takes `--file`.
-A missing file, broken JSON and a wrong shape give three different messages and exit code 1.
-
-## Status
-
-Module 1: data shape, kinds, class, guard. Module 2: workspace with a library and a cli.
-Module 3: modlets, the ledger comes from a JSON file, two commands for the terminal.
-Next: prices and the profit.
+The program counts units, not prices or profit. Withdraw removes the amount and fee.
+Transfer only changes the total by its fee. Buy and sell fees are quote-currency data.
+Transactions are applied in the file order. New ledgers are in memory and disappear
+on restart. Next I would save them to a file and add prices.
