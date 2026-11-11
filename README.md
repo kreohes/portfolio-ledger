@@ -19,7 +19,8 @@ pnpm web
 ```
 
 Open http://127.0.0.1:5174. The API is http://127.0.0.1:3001.
-Click a transaction for its details. Create demo copy makes a new ledger on the API.
+Use the Asset list to show transactions for one asset. Click a transaction for
+its details. Create demo copy makes a new ledger on the API.
 
 The terminal also uses the API:
 

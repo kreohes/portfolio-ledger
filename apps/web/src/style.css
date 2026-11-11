@@ -110,6 +110,10 @@ dd {
   list-style: none;
   padding: 0;
 }
+select {
+  font: inherit;
+  padding: 4px 8px;
+}
 .transaction-list button {
   width: 100%;
 }
